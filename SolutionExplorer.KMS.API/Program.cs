@@ -63,6 +63,7 @@ namespace SolutionExplorer.KMS.API
                     });
             });
             builder.Services.AddServices(builder.Configuration);
+            builder.Services.AddDocumentGenerationServices(builder?.Configuration?.GetSection("DocxToPdfConfig:SOfficePath")?.Value ?? "soffice");
 
             
             var app = builder.Build();

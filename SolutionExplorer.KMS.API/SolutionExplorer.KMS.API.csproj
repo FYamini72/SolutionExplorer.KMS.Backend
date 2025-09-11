@@ -8,12 +8,16 @@
 
 	<ItemGroup>
 	  <Compile Remove="Upload\**" />
+	  <Compile Remove="wwwroot\StaticFiles\**" />
 	  <Compile Remove="wwwroot\Upload\**" />
 	  <Content Remove="Upload\**" />
+	  <Content Remove="wwwroot\StaticFiles\**" />
 	  <Content Remove="wwwroot\Upload\**" />
 	  <EmbeddedResource Remove="Upload\**" />
+	  <EmbeddedResource Remove="wwwroot\StaticFiles\**" />
 	  <EmbeddedResource Remove="wwwroot\Upload\**" />
 	  <None Remove="Upload\**" />
+	  <None Remove="wwwroot\StaticFiles\**" />
 	  <None Remove="wwwroot\Upload\**" />
 	</ItemGroup>
 
@@ -29,10 +33,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SolutionExplorer.KMS.Infrastructure\SolutionExplorer.KMS.Infrastructure.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\StaticFiles\" />
 	</ItemGroup>
 
 </Project>

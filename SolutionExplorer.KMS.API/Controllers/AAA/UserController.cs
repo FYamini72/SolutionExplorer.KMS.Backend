@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolutionExplorer.KMS.API.Utilities.Api;
 using SolutionExplorer.KMS.API.Utilities.Filters;
-using SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Queries;
 using SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Commands;
 using SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Queries;
 using SolutionExplorer.KMS.Application.Dtos;
@@ -25,12 +24,15 @@ namespace SolutionExplorer.KMS.API.Controllers.AAA
         private readonly IValidator<UserChangePasswordDto> _userChangePasswordValidator;
         private readonly IValidator<UserSearchDto> _searchValidator;
 
+        private readonly IWebHostEnvironment _env;
+
         public UserController(IMediator mediator
             , IValidator<LoginDto> loginValidator
             , IValidator<UserCreateDto> userCreateValidator
             , IValidator<UserUpdateDto> userUpdateValidator
             , IValidator<UserChangePasswordDto> userChangePasswordValidator
-            , IValidator<UserSearchDto> searchValidator)
+            , IValidator<UserSearchDto> searchValidator
+            , IWebHostEnvironment env)
         {
             this._mediator = mediator;
             this._loginValidator = loginValidator;
@@ -38,6 +40,7 @@ namespace SolutionExplorer.KMS.API.Controllers.AAA
             this._userUpdateValidator = userUpdateValidator;
             this._userChangePasswordValidator = userChangePasswordValidator;
             this._searchValidator = searchValidator;
+            this._env = env;
         }
 
         [HttpGet]

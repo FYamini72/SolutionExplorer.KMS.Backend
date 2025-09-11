@@ -1,30 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Net;
+﻿using Betalgo.Ranul.OpenAI.Extensions;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Betalgo.Ranul.OpenAI.Extensions;
-using SolutionExplorer.KMS.Infrastructure.Data;
-using SolutionExplorer.KMS.Domain.Settings;
-using SolutionExplorer.KMS.Application.Repositories;
-using SolutionExplorer.KMS.Application.Services.Implementations;
-using SolutionExplorer.KMS.Application.Services.Interfaces;
-using SolutionExplorer.KMS.Infrastructure.IdentityServices;
-using SolutionExplorer.KMS.API.Utilities.Exceptions;
-using SolutionExplorer.KMS.API.Utilities.Api;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SolutionExplorer.KMS.API.Mapping;
-using SolutionExplorer.KMS.Infrastructure.Repositories;
-using SolutionExplorer.KMS.Domain.Entities.AAA;
+using SolutionExplorer.KMS.API.Utilities.Api;
+using SolutionExplorer.KMS.API.Utilities.Exceptions;
 using SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Commands;
 using SolutionExplorer.KMS.Application.Dtos.AAA.Validators;
-using SolutionExplorer.KMS.Application.Services.Interfaces.AAA;
+using SolutionExplorer.KMS.Application.Repositories;
+using SolutionExplorer.KMS.Application.Services.Implementations;
 using SolutionExplorer.KMS.Application.Services.Implementations.AAA;
 using SolutionExplorer.KMS.Application.Services.Implementations.Ai;
+using SolutionExplorer.KMS.Application.Services.Implementations.DocxToPdf;
+using SolutionExplorer.KMS.Application.Services.Interfaces;
+using SolutionExplorer.KMS.Application.Services.Interfaces.AAA;
 using SolutionExplorer.KMS.Application.Services.Interfaces.Ai;
+using SolutionExplorer.KMS.Application.Services.Interfaces.DocxToPdf;
+using SolutionExplorer.KMS.Domain.Entities.AAA;
+using SolutionExplorer.KMS.Domain.Settings;
+using SolutionExplorer.KMS.Infrastructure.Data;
+using SolutionExplorer.KMS.Infrastructure.IdentityServices;
+using SolutionExplorer.KMS.Infrastructure.Repositories;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace SolutionExplorer.KMS.API.Utilities
 {
@@ -166,6 +168,14 @@ namespace SolutionExplorer.KMS.API.Utilities
             services.AddSwaggerGen();
 
             //ServiceLocator.SetServiceProvider(services.BuildServiceProvider());
+        }
+
+        public static void AddDocumentGenerationServices(this IServiceCollection services, string sofficePath = "soffice")
+        {
+            services.AddSingleton<ITemplateProcessor, TemplateProcessor>();
+            services.AddSingleton<ILibreOfficeConverter>(_ => new LibreOfficeConverter(sofficePath));
+            services.AddSingleton<IEncryptionService, AesEncryptionService>();
+            services.AddSingleton<IDocumentGenerator, DocumentGeneratorService>();
         }
     }
 }
