@@ -4,6 +4,7 @@ using System.Text;
 using SolutionExplorer.KMS.CodeGeneratore.Utilities;
 using SolutionExplorer.KMS.Domain.Entities;
 using SolutionExplorer.KMS.Domain.Entities.AAA;
+using SolutionExplorer.KMS.Domain.Entities.Documents;
 
 namespace SolutionExplorer.KMS.CodeGeneratore
 {
@@ -24,10 +25,15 @@ namespace SolutionExplorer.KMS.CodeGeneratore
             {
                 nameof(Role).ToLower(),
                 nameof(User).ToLower(),
-                //nameof(UserRole).ToLower(),
+                nameof(UserRole).ToLower(),
+
+                nameof(DocumentInfo).ToLower(),
 
                 nameof(AttachmentFile).ToLower(),
-                nameof(EventLog).ToLower()
+                nameof(EventLog).ToLower(),
+                nameof(SystemSetting).ToLower(),
+                //nameof(Identifier).ToLower(),
+                nameof(Equipment).ToLower()
             };
 
             do
@@ -674,7 +680,9 @@ namespace SolutionExplorer.KMS.CodeGeneratore
             string root_Directory = new DirectoryInfo("../../../../").FullName;
 
             var path_parts = root_Directory.Split(@"\").Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            string solutionName = path_parts[path_parts.Length - 1];
+            string solutionPath = Directory.GetFiles(root_Directory, "*.sln").FirstOrDefault();
+            string solutionName = Path.GetFileNameWithoutExtension(solutionPath);
+            //string solutionName = path_parts[path_parts.Length - 1];
 
             string applicationLayer_Directory = Path.Combine(root_Directory, $"{solutionName}.Application");
             string apiLayer_Directory = Path.Combine(root_Directory, $"{solutionName}.API");
