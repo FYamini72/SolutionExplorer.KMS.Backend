@@ -38,6 +38,20 @@ namespace SolutionExplorer.KMS.API.Mapping
                     source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}"
                 )
                 ;
+
+            TypeAdapterConfig<Equipment, EquipmentDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}"
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}"
+                )
+                ;
         }
     }
 }
