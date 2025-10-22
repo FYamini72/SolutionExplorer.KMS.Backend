@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SolutionExplorer.KMS.Domain.Entities
 {
-    public class Equipment : BaseEntity
+    public class Experiment : BaseEntity
     {
         /// <summary>
         /// شناسه دیتابیسی شناسنامه
@@ -13,34 +13,19 @@ namespace SolutionExplorer.KMS.Domain.Entities
         public Identifier Identifier { get; set; }
 
         /// <summary>
-        /// نام دستگاه
+        /// نام آزمایش
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// کد دستگاه
+        /// کد ملی آزمایش
         /// </summary>
         public string? Code { get; set; }
 
         /// <summary>
-        /// مدل
+        /// وضعیت فعال بودن
         /// </summary>
-        public string? EquipmentModel { get; set; }
-
-        /// <summary>
-        /// شماره سریال
-        /// </summary>
-        public string? SerialNo { get; set; }
-
-        /// <summary>
-        /// کارخانه سازنده
-        /// </summary>
-        public string? Manufacturer { get; set; }
-
-        /// <summary>
-        /// کشور سازنده
-        /// </summary>
-        public string? ManufactureCountry { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// شناسه دیتابیسی کاربر تایید کننده

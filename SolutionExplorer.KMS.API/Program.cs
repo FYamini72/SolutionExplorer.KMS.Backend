@@ -12,7 +12,7 @@ namespace SolutionExplorer.KMS.API
     {
         private static bool hasRun = false;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +71,7 @@ namespace SolutionExplorer.KMS.API
             ServiceLocator.SetHttpContextAccessor(app.Services.GetRequiredService<IHttpContextAccessor>());
 
             var dbContext = builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>();
-            DataInitializer.Initialize(dbContext);
+            await DataInitializer.Initialize(dbContext);
 
             var dbName = (builder.Configuration.GetSection("DatabaseSetting:DatabaseName").Value ?? "").ToString();
             var eventLogFilePath = (builder.Configuration.GetSection("DatabaseSetting:EventLogFilePath").Value ?? "").ToString();

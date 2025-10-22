@@ -33,7 +33,8 @@ namespace SolutionExplorer.KMS.CodeGeneratore
                 nameof(EventLog).ToLower(),
                 nameof(SystemSetting).ToLower(),
                 nameof(Identifier).ToLower(),
-                nameof(Equipment).ToLower()
+                nameof(Equipment).ToLower(),
+                nameof(Experiment).ToLower(),
             };
 
             do

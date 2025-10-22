@@ -52,7 +52,7 @@ namespace SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Handlers
                         request.SearchDto.Skip = 0;
 
                     totalCount = await items.CountAsync();
-                    items.Skip(request.SearchDto.Skip.Value).Take(request.SearchDto.Take.Value);
+                    items = items.Skip(request.SearchDto.Skip.Value).Take(request.SearchDto.Take.Value);
                 }
             }
 
