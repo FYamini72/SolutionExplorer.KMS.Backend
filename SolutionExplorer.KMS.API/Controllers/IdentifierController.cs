@@ -20,12 +20,14 @@ namespace SolutionExplorer.KMS.API.Controllers
         private readonly IMediator _mediator;
         private readonly IValidator<IdentifierCreateDto> _createValidator;
         private readonly IValidator<IdentifierSearchDto> _searchValidator;
+        private readonly IValidator<IdentifierChangeFileAndDescriptionDto> _changeFileAndDescriptionValidator;
 
-        public IdentifierController(IMediator mediator, IValidator<IdentifierCreateDto> createValidator, IValidator<IdentifierSearchDto> searchValidator)
+        public IdentifierController(IMediator mediator, IValidator<IdentifierCreateDto> createValidator, IValidator<IdentifierSearchDto> searchValidator, IValidator<IdentifierChangeFileAndDescriptionDto> changeFileAndDescriptionValidator)
         {
             this._mediator = mediator;
             this._createValidator = createValidator;
             this._searchValidator = searchValidator;
+            this._changeFileAndDescriptionValidator = changeFileAndDescriptionValidator;
         }
 
         [HttpGet]
@@ -104,6 +106,26 @@ namespace SolutionExplorer.KMS.API.Controllers
             }
 
             var command = new UpdateIdentifierCommand(model);
+            var handlerResponse = await _mediator.Send(command);
+
+            if (handlerResponse.Status)
+                return Ok(handlerResponse.Data);
+
+            return BadRequest(handlerResponse.Message);
+        }
+
+        [HttpPut("[action]")]
+        public async Task<ApiResult<IdentifierDisplayDto>> ChangeFileAndDescription(IdentifierChangeFileAndDescriptionDto model)
+        {
+            var result = await _changeFileAndDescriptionValidator.ValidateAsync(model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+                return BadRequest(ModelState);
+            }
+
+            var command = new UpdateIdentifierFileAndDescriptionCommand(model);
             var handlerResponse = await _mediator.Send(command);
 
             if (handlerResponse.Status)

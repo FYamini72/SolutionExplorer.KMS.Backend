@@ -49,5 +49,16 @@ namespace SolutionExplorer.KMS.Domain.Entities
         public int SecondConfirmerUserId { get; set; }
         [ForeignKey(nameof(SecondConfirmerUserId))]
         public User SecondConfirmerUser { get; set; }
+
+        public string? Description { get; set; }
+
+        public int? AttachmentFileId { get; set; }
+        [ForeignKey(nameof(AttachmentFileId))]
+        public AttachmentFile? AttachmentFile { get; set; }
+
+        /// <summary>
+        /// نوع شناسنامه، مثلا شناسنامه تجهیزات، شناسنامه آزمایشات و ...
+        /// </summary>
+        public IdentifierType IdentifierType { get; set; }
     }
 }

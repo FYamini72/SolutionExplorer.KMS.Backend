@@ -10,6 +10,7 @@ namespace SolutionExplorer.KMS.Domain.EntitiesConfigurations
         {
             builder.Property(x => x.Title).HasMaxLength(150);
             builder.Property(x => x.DocumentNumber).HasMaxLength(50);
+            builder.Property(x => x.Description).HasMaxLength(1000);
         }
     }
 }
