@@ -20,6 +20,11 @@
         /// <summary>
         /// چک لیست ممیزی
         /// </summary>
-        AuditChecklist
+        AuditChecklist,
+
+        /// <summary>
+        /// گزارش جواب
+        /// </summary>
+        ReportAnswer
     }
 }

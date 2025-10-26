@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolutionExplorer.KMS.Application.CQRS.IdentifierFiles.Queries;
 using SolutionExplorer.KMS.Application.Dtos;
-
 using SolutionExplorer.KMS.Domain.Entities;
 using SolutionExplorer.KMS.Application.Services.Interfaces;
 
@@ -22,6 +21,7 @@ namespace SolutionExplorer.KMS.Application.CQRS.IdentifierFiles.Handlers
         {
             var items = _service
                 .GetAll()
+                .Include(x => x.AttachmentFile)
                 .Include(x => x.ProducerUser)
                 .Include(x => x.FirstConfirmerUser)
                 .Include(x => x.SecondConfirmerUser)
@@ -53,6 +53,9 @@ namespace SolutionExplorer.KMS.Application.CQRS.IdentifierFiles.Handlers
 
                     if (request.SearchDto.SecondConfirmerUserId.HasValue)
                         items = items.Where(x => x.SecondConfirmerUserId == request.SearchDto.SecondConfirmerUserId.Value);
+
+                    if (request.SearchDto.IdentifierType.HasValue)
+                        items = items.Where(x => x.IdentifierType == request.SearchDto.IdentifierType.Value);
 
                     if (!request.SearchDto.Take.HasValue || request.SearchDto.Take <= 0)
                         request.SearchDto.Take = 10;

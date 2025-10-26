@@ -5,21 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 using SolutionExplorer.KMS.Application.Dtos;
 using SolutionExplorer.KMS.API.Utilities.Api;
 using SolutionExplorer.KMS.API.Utilities.Filters;
-using SolutionExplorer.KMS.Application.CQRS.EquipmentFiles.Commands;
-using SolutionExplorer.KMS.Application.CQRS.EquipmentFiles.Queries;
+using SolutionExplorer.KMS.Application.CQRS.LabReportHistoryFiles.Commands;
+using SolutionExplorer.KMS.Application.CQRS.LabReportHistoryFiles.Queries;
 
 namespace SolutionExplorer.KMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [ApiResultFilter]
-    public class EquipmentController : ControllerBase
+    public class LabReportHistoryController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IValidator<EquipmentCreateDto> _createValidator;
-        private readonly IValidator<EquipmentSearchDto> _searchValidator;
+        private readonly IValidator<LabReportHistoryCreateDto> _createValidator;
+        private readonly IValidator<LabReportHistorySearchDto> _searchValidator;
 
-        public EquipmentController(IMediator mediator, IValidator<EquipmentCreateDto> createValidator, IValidator<EquipmentSearchDto> searchValidator)
+        public LabReportHistoryController(IMediator mediator, IValidator<LabReportHistoryCreateDto> createValidator, IValidator<LabReportHistorySearchDto> searchValidator)
         {
             this._mediator = mediator;
             this._createValidator = createValidator;
@@ -27,9 +27,9 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ApiResult<BaseGridDto<EquipmentDisplayDto>>> Get()
+        public async Task<ApiResult<BaseGridDto<LabReportHistoryDisplayDto>>> Get()
         {
-            var query = new GetAllEquipmentQuery(null);
+            var query = new GetAllLabReportHistoriesQuery(null);
             var handlerResponse = await _mediator.Send(query);
 
             if (handlerResponse.Status)
@@ -39,9 +39,9 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ApiResult<EquipmentDisplayDto>> Get(int id)
+        public async Task<ApiResult<LabReportHistoryDisplayDto>> Get(int id)
         {
-            var query = new GetEquipmentQuery(id);
+            var query = new GetLabReportHistoryQuery(id);
             var handlerResponse = await _mediator.Send(query);
 
             if (handlerResponse.Status)
@@ -51,7 +51,7 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpPost("GetByFilter")]
-        public async Task<ApiResult<BaseGridDto<EquipmentDisplayDto>>> Post(EquipmentSearchDto model)
+        public async Task<ApiResult<BaseGridDto<LabReportHistoryDisplayDto>>> Post([FromBody] LabReportHistorySearchDto model)
         {
             var result = await _searchValidator.ValidateAsync(model);
 
@@ -61,7 +61,7 @@ namespace SolutionExplorer.KMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var query = new GetAllEquipmentQuery(model);
+            var query = new GetAllLabReportHistoriesQuery(model);
             var handlerResponse = await _mediator.Send(query);
 
             if (handlerResponse.Status)
@@ -71,7 +71,7 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ApiResult<EquipmentDisplayDto>> Post(EquipmentCreateDto model)
+        public async Task<ApiResult<LabReportHistoryDisplayDto>> Post(LabReportHistoryCreateDto model)
         {
             var result = await _createValidator.ValidateAsync(model);
 
@@ -81,7 +81,7 @@ namespace SolutionExplorer.KMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var command = new CreateEquipmentCommand(model);
+            var command = new CreateLabReportHistoryCommand(model);
             var handlerResponse = await _mediator.Send(command);
 
             if (handlerResponse.Status)
@@ -91,7 +91,7 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ApiResult<EquipmentDisplayDto>> Put(EquipmentCreateDto model)
+        public async Task<ApiResult<LabReportHistoryDisplayDto>> Put(LabReportHistoryCreateDto model)
         {
             var result = await _createValidator.ValidateAsync(model);
 
@@ -101,7 +101,7 @@ namespace SolutionExplorer.KMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var command = new UpdateEquipmentCommand(model);
+            var command = new UpdateLabReportHistoryCommand(model);
             var handlerResponse = await _mediator.Send(command);
 
             if (handlerResponse.Status)
@@ -113,7 +113,7 @@ namespace SolutionExplorer.KMS.API.Controllers
         [HttpDelete]
         public async Task<ApiResult> Delete(int id)
         {
-            var command = new DeleteEquipmentCommand(id);
+            var command = new DeleteLabReportHistoryCommand(id);
             var handlerResponse = await _mediator.Send(command);
 
             if (handlerResponse.Status)

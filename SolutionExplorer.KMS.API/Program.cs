@@ -1,10 +1,12 @@
-using SolutionExplorer.KMS.API.Utilities.Middelwares;
-using SolutionExplorer.KMS.API.Utilities;
-using SolutionExplorer.KMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using SolutionExplorer.KMS.API.Mapping;
+using SolutionExplorer.KMS.API.Utilities;
+using SolutionExplorer.KMS.API.Utilities.Middelwares;
+using SolutionExplorer.KMS.Application.Services.Interfaces;
 using SolutionExplorer.KMS.Application.Utilities;
+using SolutionExplorer.KMS.Infrastructure.Data;
 
 namespace SolutionExplorer.KMS.API
 {
@@ -64,8 +66,7 @@ namespace SolutionExplorer.KMS.API
             });
             builder.Services.AddServices(builder.Configuration);
             builder.Services.AddDocumentGenerationServices(builder?.Configuration?.GetSection("DocxToPdfConfig:SOfficePath")?.Value ?? "soffice");
-
-            
+                        
             var app = builder.Build();
 
             ServiceLocator.SetHttpContextAccessor(app.Services.GetRequiredService<IHttpContextAccessor>());

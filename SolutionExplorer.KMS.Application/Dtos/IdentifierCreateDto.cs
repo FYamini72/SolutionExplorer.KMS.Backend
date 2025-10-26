@@ -1,4 +1,5 @@
-﻿using SolutionExplorer.KMS.Domain.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using SolutionExplorer.KMS.Domain.Enums;
 
 namespace SolutionExplorer.KMS.Application.Dtos
 {
@@ -39,5 +40,16 @@ namespace SolutionExplorer.KMS.Application.Dtos
         /// </summary>
         public int? SecondConfirmerUserId { get; set; }
 
+        public string? Description { get; set; }
+
+        /// <summary>
+        /// فایل پیوست شده
+        /// </summary>
+        public IFormFile? SelectedFile { get; set; }
+
+        /// <summary>
+        /// نوع شناسنامه، مثلا شناسنامه تجهیزات، شناسنامه آزمایشات و ...
+        /// </summary>
+        public IdentifierType IdentifierType { get; set; }
     }
 }

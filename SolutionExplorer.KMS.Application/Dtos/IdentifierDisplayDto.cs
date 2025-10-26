@@ -17,5 +17,11 @@ namespace SolutionExplorer.KMS.Application.Dtos
 
         public int? SecondConfirmerUserId { get; set; }
         public string? SecondConfirmerUserFullName { get; set; }
+
+        public string? Description { get; set; }
+
+        public int? AttachmentFileId { get; set; }
+        public string? AttachmentFileName { get; set; }
+        public IdentifierType IdentifierType { get; set; }
     }
 }

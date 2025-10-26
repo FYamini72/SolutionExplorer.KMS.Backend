@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolutionExplorer.KMS.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SolutionExplorer.KMS.Infrastructure.Data;
 namespace SolutionExplorer.KMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251027195426_ChangeIdentifierTable")]
+    partial class ChangeIdentifierTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -531,81 +534,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("Identifiers");
                 });
 
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.LabReportHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AdmissionNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<int>("FirstConfirmerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCritical")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PatientName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("ReceiverUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReportDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReporterComment")
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<int>("ReporterUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SecondConfirmerUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("FirstConfirmerUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("ReceiverUserId");
-
-                    b.HasIndex("ReporterUserId");
-
-                    b.HasIndex("SecondConfirmerUserId");
-
-                    b.ToTable("LabReportHistories");
-                });
-
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
                 {
                     b.Property<int>("Id")
@@ -871,51 +799,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("ModifiedByUser");
 
                     b.Navigation("ProducerUser");
-
-                    b.Navigation("SecondConfirmerUser");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.LabReportHistory", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
-                        .WithMany()
-                        .HasForeignKey("FirstConfirmerUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ReceiverUser")
-                        .WithMany()
-                        .HasForeignKey("ReceiverUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ReporterUser")
-                        .WithMany()
-                        .HasForeignKey("ReporterUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
-                        .WithMany()
-                        .HasForeignKey("SecondConfirmerUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("FirstConfirmerUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("ReceiverUser");
-
-                    b.Navigation("ReporterUser");
 
                     b.Navigation("SecondConfirmerUser");
                 });

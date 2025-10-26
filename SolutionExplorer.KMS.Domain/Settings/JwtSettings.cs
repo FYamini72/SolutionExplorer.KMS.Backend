@@ -9,8 +9,11 @@
         public int NotBeforeMinutes { get; set; }
         public int ExpirationMinutes { get; set; }
     }
-    public class AvalAiSetting
+    public class FilePathConfiguration
     {
-        public string ApiKey { get; set; }
+        public string BasePath { get; set; }
+        public string BaseUrl { get; set; }
+        public string IdentifiersAttachmentPath { get; set; }
+        public bool IsProductionMode { get; set; }
     }
 }

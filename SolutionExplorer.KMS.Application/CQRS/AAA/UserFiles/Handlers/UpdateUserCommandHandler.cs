@@ -5,6 +5,7 @@ using SolutionExplorer.KMS.Application.Dtos.AAA;
 using SolutionExplorer.KMS.Application.Services.Interfaces;
 using SolutionExplorer.KMS.Application.Services.Interfaces.AAA;
 using SolutionExplorer.KMS.Application.Utilities;
+using SolutionExplorer.KMS.Domain.Enums;
 
 namespace SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Handlers
 {
@@ -38,7 +39,7 @@ namespace SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Handlers
 
             obj.SecurityStamp = Guid.NewGuid();
 
-            obj.Profile = await _attachmentFileService.UploadFile(request.User.SelectedFile, cancellationToken);
+            obj.Profile = await _attachmentFileService.UploadFile(request.User.SelectedFile, FileCategory.UserProfile, cancellationToken);
 
             var result = await _userService.UpdateAsync(obj, cancellationToken);
 

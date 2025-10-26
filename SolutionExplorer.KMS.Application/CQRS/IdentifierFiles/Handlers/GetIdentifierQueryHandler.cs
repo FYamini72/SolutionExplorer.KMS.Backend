@@ -21,6 +21,7 @@ namespace SolutionExplorer.KMS.Application.CQRS.IdentifierFiles.Handlers
         {
             var obj = await _service
                 .GetAll()
+                .Include(x => x.AttachmentFile)
                 .Include(x => x.ProducerUser)
                 .Include(x => x.FirstConfirmerUser)
                 .Include(x => x.SecondConfirmerUser)

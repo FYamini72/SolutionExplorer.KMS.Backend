@@ -38,5 +38,10 @@ namespace SolutionExplorer.KMS.Application.Dtos
         /// شناسه دیتابیسی کاربر تصدیق کننده 
         /// </summary>
         public int? SecondConfirmerUserId { get; set; }
+
+        /// <summary>
+        /// نوع شناسنامه، مثلا شناسنامه تجهیزات، شناسنامه آزمایشات و ...
+        /// </summary>
+        public IdentifierType? IdentifierType { get; set; }
     }
 }

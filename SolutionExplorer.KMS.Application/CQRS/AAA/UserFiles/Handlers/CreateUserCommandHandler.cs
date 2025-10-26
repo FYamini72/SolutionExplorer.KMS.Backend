@@ -8,6 +8,7 @@ using SolutionExplorer.KMS.Application.Services.Interfaces;
 using SolutionExplorer.KMS.Application.Services.Interfaces.AAA;
 using SolutionExplorer.KMS.Application.Utilities;
 using SolutionExplorer.KMS.Domain.Entities.AAA;
+using SolutionExplorer.KMS.Domain.Enums;
 
 namespace SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Handlers
 {
@@ -35,7 +36,7 @@ namespace SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Handlers
             user.UserRoles = new List<UserRole>();
 
             if (request.User.SelectedFile != null)
-                user.Profile = await _attachmentFileService.UploadFile(request.User.SelectedFile, cancellationToken);
+                user.Profile = await _attachmentFileService.UploadFile(request.User.SelectedFile, FileCategory.UserProfile, cancellationToken);
 
             if (request.User.RoleIds == null || !request.User.RoleIds.Any())
             {

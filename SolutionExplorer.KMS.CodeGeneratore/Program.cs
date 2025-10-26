@@ -35,6 +35,7 @@ namespace SolutionExplorer.KMS.CodeGeneratore
                 nameof(Identifier).ToLower(),
                 nameof(Equipment).ToLower(),
                 nameof(Experiment).ToLower(),
+                nameof(LabReportHistory).ToLower(),
             };
 
             do
