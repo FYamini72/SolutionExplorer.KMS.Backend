@@ -89,6 +89,27 @@ namespace SolutionExplorer.KMS.API.Controllers.AAA
 
 
         [HttpPost("[action]")]
+        public async Task<ApiResult<List<KeyValuePair<int, string>>>> GetByFilterForDropDown(UserSearchDto model)
+        {
+            var result = await _searchValidator.ValidateAsync(model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+                return BadRequest(ModelState);
+            }
+
+            var query = new GetAllUsersForDropDownQuery(model);
+            var handlerResponse = await _mediator.Send(query);
+
+            if (handlerResponse.Status)
+                return Ok(handlerResponse.Data);
+
+            return BadRequest(handlerResponse.Message);
+        }
+
+
+        [HttpPost("[action]")]
         public async Task<ApiResult<UserAndTokenDisplayDto>> Login(LoginDto model)
         {
             var validationResult = await _loginValidator.ValidateAsync(model);

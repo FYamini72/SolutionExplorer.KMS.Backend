@@ -3,16 +3,16 @@ using SolutionExplorer.KMS.Infrastructure.Data;
 using SolutionExplorer.KMS.Application.Utilities;
 using SolutionExplorer.KMS.Domain.Entities.AAA;
 using SolutionExplorer.KMS.Domain.Entities.Documents;
-using System.Threading.Tasks;
+using SolutionExplorer.KMS.Domain.Entities;
 
 namespace SolutionExplorer.KMS.API.Utilities;
 
 public class DataInitializer
 {
-    internal static void Initialize(ApplicationDbContext context)
+    internal static async Task Initialize(ApplicationDbContext context)
     {
         context.Database.Migrate();
-        InitData(context);
+        await InitData(context);
     }
 
     private static async Task InitData(ApplicationDbContext context)
@@ -215,6 +215,98 @@ public class DataInitializer
             };
 
             await context.Set<DocumentInfo>().AddRangeAsync(documents);
+            await context.SaveChangesAsync();
+        }
+
+        if(!(await context.Set<Experiment>().AnyAsync()))
+        {
+            var userId = (await context.Set<User>().FirstOrDefaultAsync())?.Id ?? 0;
+            var identifier = new Identifier()
+            {
+                Category = Domain.Enums.DocumentCategory.BaseInfoMicrobiologyLab,
+                EditNo = "ویرایش 1",
+                DocumentNumber = "B-001-0002",
+                Title = "شناسنامه آزمایشات",
+                ProducerUserId = userId,
+                FirstConfirmerUserId = userId,
+                SecondConfirmerUserId = userId
+            };
+            await context.Set<Identifier>().AddAsync(identifier);
+            await context.SaveChangesAsync();
+
+            var experiments = new List<Experiment>
+            {
+                new() { Title = "Fungi Direct Smear", Code = "804090", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Fungi Culture & Sensitivity", Code = "804095", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Urethral Discharge Direct Smear", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Urine Culture & Sensitivity:", Code = "804000", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Stool  Culture & Sensitivity:", Code = "804005", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Throat Smear (Gram Stain)", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Throat  Culture & Sensitivity:", Code = "804015", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Sputum  Culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Sputum Direct Smear", Code = "804420", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Urethral Discharge C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Prostatic Discharge Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Prostatic Discharge C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Vaginal  Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Vaginal Culture & Sensitivity:", Code = "804040", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Wound Discharge Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Wound Discharge C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Ear Discharge Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Ear  Culture & Sensitivity:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Nasal  Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Nasal Discharge C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Semen Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Semen Culture & Sensitivity:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Breast Aspiration Culture&Sensitivity", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Eye Discharge C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Gastric  Juice /C&S :", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "BK Smear", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Nipple Discharge C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Pleural Fluid C &S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Ulcer Culture & Sensitivity:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Abscess Drain C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Synovial Fluid C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Sinus Drain C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Scabies Direct Smear:", Code = "804115", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "CSF Culture & Sensitivity:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "CSF Direct Smear", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Ascites C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "BK Direct Smear*1(Urine)", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Post Nasal Discharge C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bronchial Lavage C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Peritoneal Dialysis Culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Blood Culture*1", Code = "804010", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Leishmania Culture", Code = "804020", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Anaerobic C & S:", Code = "804030", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Tracheal C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "BK Smear For Trachea:", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bone Marrow C & S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Synovial Fluid For BK:", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Sputum For Eosinophilia", Code = "802045", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Abscess (C&S):", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Peritoneal Dialysis Direct Smear", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Abscess Discharge Direct Smear", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Testis specimen Direct  smear", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Testis specimen culture&sensitivity", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Tissue culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "BK Direct Smear*2(Urine)", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "BK Direct Smear*3(Urine)", Code = "804075", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bk Culture*2 ( Urine)", Code = "804080", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Catheter Culture", Code = "804015", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Discharge", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Discharge C&S:", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Urine Culture & Sensitivity:", Code = "804000", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "EPS Culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Discharge Culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bronchial Culture", Code = "804035", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bronchial Discharge Direct Smear:", Code = "804425", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Bactec Culture*3(Fungal)", Code = "804182", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+                new() { Title = "Stool  Culture x3", Code = "804005", IsActive = false, IdentifierId = identifier.Id, FirstConfirmerUserId = userId, SecondConfirmerUserId = userId },
+            };
+
+            await context.Set<Experiment>().AddRangeAsync(experiments);
             await context.SaveChangesAsync();
         }
     }

@@ -52,6 +52,9 @@ namespace SolutionExplorer.KMS.API.Utilities
             var _avalAiSettings = configuration.GetSection("AvalAiSetting").Get<AvalAiSetting>();
             services.AddSingleton(_avalAiSettings);
 
+            var _filePathConfiguration = configuration.GetSection("FilePathConfiguration").Get<FilePathConfiguration>() ?? new();
+            services.AddSingleton(_filePathConfiguration);
+
             services.AddOpenAIService(settings =>
             {
                 settings.ApiKey = _avalAiSettings?.ApiKey ?? "";

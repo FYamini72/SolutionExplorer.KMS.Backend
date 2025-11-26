@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using SolutionExplorer.KMS.Application.Repositories;
 using SolutionExplorer.KMS.Application.Services.Interfaces;
+using SolutionExplorer.KMS.Application.Utilities;
 using SolutionExplorer.KMS.Domain.Entities;
+using SolutionExplorer.KMS.Domain.Enums;
+using SolutionExplorer.KMS.Domain.Settings;
 
 namespace SolutionExplorer.KMS.Application.Services.Implementations
 {
@@ -11,27 +14,27 @@ namespace SolutionExplorer.KMS.Application.Services.Implementations
     {
         private readonly IBaseRepository<AttachmentFile> _repository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly string _strRootPath;
+        private readonly FilePathConfiguration _fileConfiguration;
 
         public AttachmentFileService(IBaseRepository<AttachmentFile> repository
             , IWebHostEnvironment webHostEnvironment
             , IBaseRepository<EventLog> eventLogRepository
             , IConfiguration configuration
-            , IHttpContextAccessor httpContext) : base(repository, eventLogRepository, configuration, httpContext)
+            , IHttpContextAccessor httpContext
+            , FilePathConfiguration fileConfiguration) : base(repository, eventLogRepository, configuration, httpContext)
         {
             this._repository = repository;
             this._webHostEnvironment = webHostEnvironment;
-            this._strRootPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot/StaticFiles");
+            this._fileConfiguration = fileConfiguration;
         }
 
-        public async Task<AttachmentFile> UploadFile(IFormFile file, CancellationToken cancellationToken)
+        public async Task<AttachmentFile?> UploadFile(IFormFile file, FileCategory fileCategory, CancellationToken cancellationToken)
         {
             if (file != null && file.Length > 0)
             {
-
                 string filename = $"{Guid.NewGuid().ToString().Trim()}{Path.GetExtension(file.FileName)}";
                 var size = file.Length;
-                string strFilePathName = Path.Combine(_strRootPath, filename);
+                string strFilePathName = Path.Combine(AttachmentUrlResolver.GetFolderDirectory(fileCategory, FileAccessMode.Write), filename);
 
                 using (var fileStream = new FileStream(strFilePathName, FileMode.Create))
                 {
@@ -41,7 +44,8 @@ namespace SolutionExplorer.KMS.Application.Services.Implementations
                 return new AttachmentFile()
                 {
                     FileName = filename,
-                    Size = size
+                    Size = size,
+                    FileCategory = fileCategory
                 };
             }
 
@@ -64,7 +68,7 @@ namespace SolutionExplorer.KMS.Application.Services.Implementations
         {
             if (file != null)
             {
-                var strFilePath = Path.Combine(_strRootPath, file.FileName);
+                var strFilePath = Path.Combine(AttachmentUrlResolver.GetFolderDirectory(file.FileCategory, FileAccessMode.Write), file.FileName);
 
                 if (File.Exists(strFilePath))
                     File.Delete(strFilePath);
@@ -92,18 +96,7 @@ namespace SolutionExplorer.KMS.Application.Services.Implementations
         public void Delete(int id, bool saveNow = true)
         {
             var obj = GetById(id);
-            Delete(obj);
-        }
-
-        public byte[] GetFileBytes(string? fileName)
-        {
-            if (string.IsNullOrEmpty(fileName))
-                return null;
-
-            string filePath = Path.Combine(_strRootPath, fileName);
-            var fileBytes = File.ReadAllBytes(filePath);
-
-            return fileBytes;
+            Delete(obj, saveNow);
         }
     }
 }

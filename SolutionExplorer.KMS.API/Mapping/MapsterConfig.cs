@@ -1,5 +1,8 @@
 ﻿using Mapster;
+using SolutionExplorer.KMS.Application.Utilities;
+using SolutionExplorer.KMS.Application.Dtos;
 using SolutionExplorer.KMS.Application.Dtos.AAA;
+using SolutionExplorer.KMS.Domain.Entities;
 using SolutionExplorer.KMS.Domain.Entities.AAA;
 
 namespace SolutionExplorer.KMS.API.Mapping
@@ -17,6 +20,92 @@ namespace SolutionExplorer.KMS.API.Mapping
                 .NewConfig()
                 .Map(destination => destination.AttachmentUrl, source => source.Profile != null ? $"/staticfiles/{source.Profile.FileName}" : "")
                 ;
+
+            TypeAdapterConfig<Identifier, IdentifierDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.ProducerUserFullName, 
+                    source => source.ProducerUser != null ? $"{source.ProducerUser.FirstName ?? ""} {source.ProducerUser.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName, 
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName, 
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.AttachmentFileName, 
+                    source => (source.AttachmentFile != null ? source.AttachmentFile.FileName : "").Trim()
+                )
+                ;
+
+            TypeAdapterConfig<Equipment, EquipmentDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                ;
+
+            TypeAdapterConfig<Experiment, ExperimentDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                ;
+
+            TypeAdapterConfig<LabReportHistory, LabReportHistoryDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.ReporterUserFullName,
+                    source => $"{source.ReporterUser.FirstName ?? ""} {source.ReporterUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.ReceiverUserFullName,
+                    source => source.ReceiverUser != null ? $"{source.ReceiverUser.FirstName ?? ""} {source.ReceiverUser.LastName ?? ""}".Trim() : string.Empty
+                )
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                ;
+
+            TypeAdapterConfig<Reference, ReferenceDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.AttachmentFileName,
+                    source => (source.AttachmentFile != null ? source.AttachmentFile.FileName : "").Trim()
+                )
+                ;
+
         }
     }
 }

@@ -171,6 +171,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<int>("FileCategory")
+                        .HasColumnType("int");
+
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -267,6 +270,77 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("DocumentInfos");
                 });
 
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Equipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("EquipmentModel")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdentifierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ManufactureCountry")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Manufacturer")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("IdentifierId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("Equipment");
+                });
+
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.EventLog", b =>
                 {
                     b.Property<int>("Id")
@@ -326,6 +400,294 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.HasIndex("ModifiedByUserId");
 
                     b.ToTable("EventLogs");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Experiment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdentifierId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("IdentifierId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("Experiments");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Identifier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AttachmentFileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("DocumentNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EditNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdentifierType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ProducerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentFileId");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("ProducerUserId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("Identifiers");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.LabReportHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdmissionNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCritical")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PatientName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ReceiverUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReportDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReporterComment")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<int>("ReporterUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("ReceiverUserId");
+
+                    b.HasIndex("ReporterUserId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("LabReportHistories");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttachmentFileId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdentifierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentFileId");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("IdentifierId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.ToTable("References");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("LabName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.ToTable("SystemSettings");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.Role", b =>
@@ -425,7 +787,219 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Equipment", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Identifier", "Identifier")
+                        .WithMany()
+                        .HasForeignKey("IdentifierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("Identifier");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.EventLog", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("ModifiedByUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Experiment", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Identifier", "Identifier")
+                        .WithMany()
+                        .HasForeignKey("IdentifierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("Identifier");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Identifier", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AttachmentFile", "AttachmentFile")
+                        .WithMany()
+                        .HasForeignKey("AttachmentFileId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ProducerUser")
+                        .WithMany()
+                        .HasForeignKey("ProducerUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttachmentFile");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("ProducerUser");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.LabReportHistory", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ReceiverUser")
+                        .WithMany()
+                        .HasForeignKey("ReceiverUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ReporterUser")
+                        .WithMany()
+                        .HasForeignKey("ReporterUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("ReporterUser");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AttachmentFile", "AttachmentFile")
+                        .WithMany()
+                        .HasForeignKey("AttachmentFileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Identifier", "Identifier")
+                        .WithMany()
+                        .HasForeignKey("IdentifierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.Navigation("AttachmentFile");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Identifier");
+
+                    b.Navigation("ModifiedByUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
                 {
                     b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
                         .WithMany()
