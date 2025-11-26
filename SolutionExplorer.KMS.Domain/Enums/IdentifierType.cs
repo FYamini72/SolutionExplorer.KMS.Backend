@@ -25,6 +25,11 @@
         /// <summary>
         /// گزارش جواب
         /// </summary>
-        ReportAnswer
+        ReportAnswer,
+
+        /// <summary>
+        /// منابع
+        /// </summary>
+        References
     }
 }

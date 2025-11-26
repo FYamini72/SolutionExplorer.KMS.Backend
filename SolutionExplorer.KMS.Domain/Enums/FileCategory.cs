@@ -10,6 +10,11 @@
         /// <summary>
         /// تصویر پروفایل کاربر
         /// </summary>
-        UserProfile
+        UserProfile,
+
+        /// <summary>
+        /// منابع
+        /// </summary>
+        References
     }
 }

@@ -606,6 +606,54 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("LabReportHistories");
                 });
 
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttachmentFileId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdentifierId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentFileId");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("IdentifierId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.ToTable("References");
+                });
+
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
                 {
                     b.Property<int>("Id")
@@ -918,6 +966,37 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("ReporterUser");
 
                     b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AttachmentFile", "AttachmentFile")
+                        .WithMany()
+                        .HasForeignKey("AttachmentFileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Identifier", "Identifier")
+                        .WithMany()
+                        .HasForeignKey("IdentifierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.Navigation("AttachmentFile");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Identifier");
+
+                    b.Navigation("ModifiedByUser");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>

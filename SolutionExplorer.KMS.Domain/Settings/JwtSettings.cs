@@ -14,6 +14,7 @@
         public string BasePath { get; set; }
         public string BaseUrl { get; set; }
         public string IdentifiersAttachmentPath { get; set; }
+        public string ReferencesPath { get; set; }
         public bool IsProductionMode { get; set; }
     }
 }

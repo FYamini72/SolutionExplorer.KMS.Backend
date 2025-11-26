@@ -73,7 +73,6 @@ namespace SolutionExplorer.KMS.API.Mapping
                 )
                 ;
 
-
             TypeAdapterConfig<LabReportHistory, LabReportHistoryDisplayDto>
                 .NewConfig()
                 .Map
@@ -95,6 +94,15 @@ namespace SolutionExplorer.KMS.API.Mapping
                 (
                     destination => destination.SecondConfirmerUserFullName,
                     source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                ;
+
+            TypeAdapterConfig<Reference, ReferenceDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.AttachmentFileName,
+                    source => (source.AttachmentFile != null ? source.AttachmentFile.FileName : "").Trim()
                 )
                 ;
 

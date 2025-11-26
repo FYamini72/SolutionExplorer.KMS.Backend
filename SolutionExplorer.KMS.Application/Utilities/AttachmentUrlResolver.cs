@@ -22,6 +22,7 @@ namespace SolutionExplorer.KMS.Application.Utilities
             string relativePath = fileCategory switch
             {
                 FileCategory.IdentifierAttachment => config.IdentifiersAttachmentPath,
+                FileCategory.References => config.ReferencesPath,
                 _ => string.Empty
             };
 
