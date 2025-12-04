@@ -106,6 +106,47 @@ namespace SolutionExplorer.KMS.API.Mapping
                 )
                 ;
 
+            TypeAdapterConfig<QualityControl, QualityControlDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.PerformedByUserFullName,
+                    source => source.PerformedByUser != null ? $"{source.PerformedByUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim() : string.Empty
+                )
+                .Map
+                (
+                    destination => destination.StorageConditionTitle,
+                    source => source.StorageCondition.Title
+                )
+                //.Map
+                //(
+                //    destination => destination.PhysicalSpecificationText,
+                //    source => (source.PhysicalSpecifications != null && source.PhysicalSpecifications.Any(x => x.IsChecked))
+                //        ? string.Join(", ", source.PhysicalSpecifications.Where(x=>x.IsChecked).Select(x=>x.QCBaseInfoPhysicalSpecification.Title).ToList())
+                //        : string.Empty
+                //)
+                ;
+
+
+            TypeAdapterConfig<PhysicalSpecification, PhysicalSpecificationDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.QCBaseInfoPhysicalSpecificationTitle,
+                    source => source.QCBaseInfoPhysicalSpecification != null ? source.QCBaseInfoPhysicalSpecification.Title : string.Empty
+                )
+                ;
+
         }
     }
 }

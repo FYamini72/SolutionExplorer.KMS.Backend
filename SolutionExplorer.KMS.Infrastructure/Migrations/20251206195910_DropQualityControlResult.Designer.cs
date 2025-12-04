@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolutionExplorer.KMS.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SolutionExplorer.KMS.Infrastructure.Data;
 namespace SolutionExplorer.KMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251206195910_DropQualityControlResult")]
+    partial class DropQualityControlResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -606,151 +609,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("LabReportHistories");
                 });
 
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PhysicalSpecification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QCBaseInfoPhysicalSpecificationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QualityControlId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("QCBaseInfoPhysicalSpecificationId");
-
-                    b.HasIndex("QualityControlId");
-
-                    b.ToTable("PhysicalSpecifications");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoExpectedResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ATCCControlOrganism")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<string>("ExpectedResult")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HaloDiameter")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PoliGroup_A")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PoliGroup_B")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PoliGroup_C")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PoliGroup_D")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QualityControlBaseInfoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("QualityControlBaseInfoId");
-
-                    b.ToTable("QCBaseInfoExpectedResults");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoPhysicalSpecification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QualityControlBaseInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("QualityControlBaseInfoId");
-
-                    b.ToTable("QCBaseInfoPhysicalSpecifications");
-                });
-
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControl", b =>
                 {
                     b.Property<int>("Id")
@@ -770,14 +628,17 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("FinalCondition")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FinalResult")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinalResultNotes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FirstConfirmerUserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDefaultValue")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -791,6 +652,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
 
                     b.Property<int?>("PerformedByUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PhysicalSpecification")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Produces")
                         .IsRequired()
@@ -812,8 +676,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StorageConditionId")
-                        .HasColumnType("int");
+                    b.Property<string>("StorageConditionText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -833,8 +698,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
 
                     b.HasIndex("SecondConfirmerUserId");
 
-                    b.HasIndex("StorageConditionId");
-
                     b.ToTable("QualityControls");
                 });
 
@@ -845,9 +708,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
 
                     b.Property<int?>("CreatedByUserId")
                         .HasColumnType("int");
@@ -860,6 +720,16 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Property<int?>("DayIntervalCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("DefaultValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Manufacturer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ModifiedByUserId")
                         .HasColumnType("int");
 
@@ -869,8 +739,19 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Property<DateTime>("NextQualityControlTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ProductionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("QualityControlPeriod")
                         .HasColumnType("int");
+
+                    b.Property<string>("Series")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StorageConditionText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -883,53 +764,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.HasIndex("ModifiedByUserId");
 
                     b.ToTable("QualityControlBaseInfos");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControlResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CorrectiveActions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QCBaseInfoExpectedResultId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QualityControlId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("QCBaseInfoExpectedResultId");
-
-                    b.HasIndex("QualityControlId");
-
-                    b.ToTable("QualityControlResults");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
@@ -978,49 +812,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.HasIndex("ModifiedByUserId");
 
                     b.ToTable("References");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.StorageCondition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QualityControlBaseInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.HasIndex("ModifiedByUserId");
-
-                    b.HasIndex("QualityControlBaseInfoId");
-
-                    b.ToTable("StorageConditions");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
@@ -1337,83 +1128,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("SecondConfirmerUser");
                 });
 
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PhysicalSpecification", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoPhysicalSpecification", "QCBaseInfoPhysicalSpecification")
-                        .WithMany()
-                        .HasForeignKey("QCBaseInfoPhysicalSpecificationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QualityControl", "QualityControl")
-                        .WithMany("PhysicalSpecifications")
-                        .HasForeignKey("QualityControlId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("QCBaseInfoPhysicalSpecification");
-
-                    b.Navigation("QualityControl");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoExpectedResult", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QualityControlBaseInfo", "QualityControlBaseInfo")
-                        .WithMany("QCBaseInfoExpectedResults")
-                        .HasForeignKey("QualityControlBaseInfoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("QualityControlBaseInfo");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoPhysicalSpecification", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QualityControlBaseInfo", "QualityControlBaseInfo")
-                        .WithMany("QCBaseInfoPhysicalSpecifications")
-                        .HasForeignKey("QualityControlBaseInfoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("QualityControlBaseInfo");
-                });
-
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControl", b =>
                 {
                     b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
@@ -1446,12 +1160,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.StorageCondition", "StorageCondition")
-                        .WithMany()
-                        .HasForeignKey("StorageConditionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("FirstConfirmerUser");
@@ -1463,8 +1171,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("QualityControlBaseInfo");
 
                     b.Navigation("SecondConfirmerUser");
-
-                    b.Navigation("StorageCondition");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControlBaseInfo", b =>
@@ -1480,37 +1186,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControlResult", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QCBaseInfoExpectedResult", "QCBaseInfoExpectedResult")
-                        .WithMany()
-                        .HasForeignKey("QCBaseInfoExpectedResultId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QualityControl", "QualityControl")
-                        .WithMany("QualityControlResults")
-                        .HasForeignKey("QualityControlId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("QCBaseInfoExpectedResult");
-
-                    b.Navigation("QualityControl");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Reference", b =>
@@ -1544,29 +1219,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("ModifiedByUser");
                 });
 
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.StorageCondition", b =>
-                {
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByUserId");
-
-                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.QualityControlBaseInfo", "QualityControlBaseInfo")
-                        .WithMany("StorageConditions")
-                        .HasForeignKey("QualityControlBaseInfoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("ModifiedByUser");
-
-                    b.Navigation("QualityControlBaseInfo");
-                });
-
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.SystemSetting", b =>
                 {
                     b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
@@ -1585,22 +1237,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.User", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControl", b =>
-                {
-                    b.Navigation("PhysicalSpecifications");
-
-                    b.Navigation("QualityControlResults");
-                });
-
-            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.QualityControlBaseInfo", b =>
-                {
-                    b.Navigation("QCBaseInfoExpectedResults");
-
-                    b.Navigation("QCBaseInfoPhysicalSpecifications");
-
-                    b.Navigation("StorageConditions");
                 });
 #pragma warning restore 612, 618
         }
