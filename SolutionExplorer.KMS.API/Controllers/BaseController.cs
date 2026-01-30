@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using DocumentFormat.OpenXml.Spreadsheet;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +53,7 @@ namespace SolutionExplorer.KMS.API.Controllers
         }
 
         [HttpPost("GetByFilter")]
-        public virtual async Task<ApiResult<List<TDisplayDto>>> Post(TSearchDto model, CancellationToken cancellationToken)
+        public virtual async Task<ApiResult<BaseGridDto<TDisplayDto>>> Post(TSearchDto model, CancellationToken cancellationToken)
         {
             var validationResult = await _searchValidator.ValidateAsync(model);
 
@@ -62,6 +64,7 @@ namespace SolutionExplorer.KMS.API.Controllers
             }
 
             var result = _service.GetAll();
+            var totalCount = await result.CountAsync();
 
             if (!model.GetAllItems)
             {
@@ -73,10 +76,16 @@ namespace SolutionExplorer.KMS.API.Controllers
                 if (!model.Skip.HasValue || model.Skip < 0)
                     model.Skip = 0;
 
-                result.Take(model.Take.Value).Skip(model.Skip.Value);
+                totalCount = await result.CountAsync();
+                result = result.Skip(model.Skip.Value).Take(model.Take.Value);
             }
 
-            return Ok(result.Adapt<List<TDisplayDto>>());
+            var response = new BaseGridDto<TDisplayDto>()
+            {
+                Data = result.Adapt<List<TDisplayDto>>(),
+                TotalCount = totalCount
+            };
+            return Ok(response);
         }
 
         [NonAction]

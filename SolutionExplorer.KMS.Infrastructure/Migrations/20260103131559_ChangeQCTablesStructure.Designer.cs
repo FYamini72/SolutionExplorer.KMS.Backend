@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolutionExplorer.KMS.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SolutionExplorer.KMS.Infrastructure.Data;
 namespace SolutionExplorer.KMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260103131559_ChangeQCTablesStructure")]
+    partial class ChangeQCTablesStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -671,6 +674,7 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("ExpectedResult")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HaloDiameter")
@@ -774,9 +778,6 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDefaultValue")
                         .HasColumnType("bit");
 
                     b.Property<string>("Manufacturer")

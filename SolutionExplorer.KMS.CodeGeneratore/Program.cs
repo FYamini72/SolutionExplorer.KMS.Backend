@@ -36,7 +36,11 @@ namespace SolutionExplorer.KMS.CodeGeneratore
                 nameof(Equipment).ToLower(),
                 nameof(Experiment).ToLower(),
                 nameof(LabReportHistory).ToLower(),
-                //nameof(Reference).ToLower(),
+                nameof(Reference).ToLower(),
+                
+                nameof(QualityControlBaseInfo).ToLower(),
+                nameof(QualityControl).ToLower(),
+                //nameof(QualityControlResult).ToLower(),
             };
 
             do
