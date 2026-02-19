@@ -10,6 +10,9 @@
 
 
         public int? ProfileId { get; set; }
-        public string? AttachmentUrl { get; set; }
+        public string? ProfileAttachmentUrl { get; set; }
+
+        public int? SignatureId { get; set; }
+        public string? SignatureAttachmentUrl { get; set; }
     }
 }

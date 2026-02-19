@@ -6,6 +6,7 @@ using SolutionExplorer.KMS.API.Utilities.Api;
 using SolutionExplorer.KMS.API.Utilities.Filters;
 using SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Commands;
 using SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Queries;
+using SolutionExplorer.KMS.Application.CQRS.AAA.UserFiles.Queries;
 using SolutionExplorer.KMS.Application.Dtos;
 using SolutionExplorer.KMS.Application.Dtos.AAA;
 
@@ -122,5 +123,27 @@ namespace SolutionExplorer.KMS.API.Controllers.AAA
 
             return BadRequest(handlerResponse.Message);
         }
+
+
+        [HttpPost("[action]")]
+        public async Task<ApiResult<List<KeyValuePair<int, string>>>> GetByFilterForDropDown(RoleSearchDto model)
+        {
+            var result = await _searchValidator.ValidateAsync(model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+                return BadRequest(ModelState);
+            }
+
+            var query = new GetAllRolesForDropDownQuery(model);
+            var handlerResponse = await _mediator.Send(query);
+
+            if (handlerResponse.Status)
+                return Ok(handlerResponse.Data);
+
+            return BadRequest(handlerResponse.Message);
+        }
+
     }
 }

@@ -5,11 +5,17 @@
 namespace SolutionExplorer.KMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPersonnelTable : Migration
+    public partial class addPersonnelTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "SignatureId",
+                table: "Users",
+                type: "int",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Personnels",
                 columns: table => new
@@ -54,6 +60,11 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_SignatureId",
+                table: "Users",
+                column: "SignatureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Personnels_FirstConfirmerUserId",
                 table: "Personnels",
                 column: "FirstConfirmerUserId");
@@ -67,13 +78,32 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                 name: "IX_Personnels_SuccessorUserId",
                 table: "Personnels",
                 column: "SuccessorUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Users_AttachmentFiles_SignatureId",
+                table: "Users",
+                column: "SignatureId",
+                principalTable: "AttachmentFiles",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Users_AttachmentFiles_SignatureId",
+                table: "Users");
+
             migrationBuilder.DropTable(
                 name: "Personnels");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_SignatureId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "SignatureId",
+                table: "Users");
         }
     }
 }

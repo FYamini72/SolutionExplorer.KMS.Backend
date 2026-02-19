@@ -60,5 +60,12 @@ namespace SolutionExplorer.KMS.Domain.Entities
         /// چارت سازمانی
         /// </summary>
         public string? OrganizationalChart { get; set; }
+
+        /// <summary>
+        /// تاریخ استخدام
+        /// </summary>
+        public DateTime? EmploymentDate { get; set; }
+
+        public string PersonnelNumber { get; set; }
     }
 }

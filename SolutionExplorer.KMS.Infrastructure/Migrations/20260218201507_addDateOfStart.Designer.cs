@@ -12,8 +12,8 @@ using SolutionExplorer.KMS.Infrastructure.Data;
 namespace SolutionExplorer.KMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260130195558_AddPersonnelTable")]
-    partial class AddPersonnelTable
+    [Migration("20260218201507_addDateOfStart")]
+    partial class addDateOfStart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Property<Guid>("SecurityStamp")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("SignatureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,6 +116,8 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.HasIndex("ModifiedByUserId");
 
                     b.HasIndex("ProfileId");
+
+                    b.HasIndex("SignatureId");
 
                     b.ToTable("Users");
 
@@ -1076,6 +1081,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<DateTime?>("EmploymentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("FirstConfirmerUserId")
                         .HasColumnType("int");
 
@@ -1136,11 +1144,17 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ProfileId");
 
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AttachmentFile", "Signature")
+                        .WithMany()
+                        .HasForeignKey("SignatureId");
+
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
 
                     b.Navigation("Profile");
+
+                    b.Navigation("Signature");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.UserRole", b =>

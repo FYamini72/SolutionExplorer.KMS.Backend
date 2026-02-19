@@ -5,6 +5,11 @@
         /// <summary>
         /// اطلاعات پایه آزمايشگاه ميکروب شناسی
         /// </summary>
-        BaseInfoMicrobiologyLab
+        BaseInfoMicrobiologyLab,
+
+        /// <summary>
+        /// مدیریت کارکنان
+        /// </summary>
+        UserManagements
     }
 }

@@ -1,0 +1,182 @@
+﻿using FluentValidation;
+using FluentValidation.Results;
+using SolutionExplorer.KMS.Application.Services.Interfaces;
+using SolutionExplorer.KMS.Application.Utilities;
+using SolutionExplorer.KMS.Domain.Entities;
+using SolutionExplorer.KMS.Domain.Entities.AAA;
+
+namespace SolutionExplorer.KMS.Application.Dtos.Validators
+{
+    public class PersonnelCreateDtoValidator : AbstractValidator<PersonnelCreateDto>
+    {
+        public PersonnelCreateDtoValidator()
+        {
+        }
+
+        public override async Task<ValidationResult> ValidateAsync(ValidationContext<PersonnelCreateDto> context, CancellationToken cancellation = default)
+        {
+            var _userService = ServiceLocator.GetService<IBaseService<Personnel>>();
+            var _roleService = ServiceLocator.GetService<IBaseService<Role>>();
+
+            RuleFor(x => x.UserName)
+                .NotEmpty()
+                .WithMessage("وارد کردن نام کاربری الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن نام کاربری الزامی است.")
+                .Must((obj, username) =>
+                {
+                    return !_userService
+                        .GetAll(x => x.Id != obj.Id && x.UserName == username)
+                        .Any();
+                })
+                .WithMessage("نام کاربری انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .WithMessage("وارد کردن کلمه عبور الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن کلمه عبور الزامی است.")
+                ;
+
+            RuleFor(x => x.RePassword)
+                .NotEmpty()
+                .WithMessage("وارد کردن تکرار کلمه عبور الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن تکرار کلمه عبور الزامی است.")
+                .Equal(x => x.Password)
+                .WithMessage("کلمه عبور و تکرار آن با یکدیگر مطابقت ندارند.")
+                ;
+
+            RuleFor(x => x.FirstName)
+                .NotEmpty()
+                .WithMessage("وارد کردن نام الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن نام الزامی است.")
+                ;
+
+            RuleFor(x => x.LastName)
+                .NotEmpty()
+                .WithMessage("وارد کردن نام خانوادگی الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن نام خانوادگی الزامی است.")
+                ;
+
+            RuleFor(x => x.RoleIds)
+                .NotNull()
+                .WithMessage("انتخاب حداقل یک نقش الزامی است.")
+                .NotEmpty()
+                .WithMessage("انتخاب حداقل یک نقش الزامی است.")
+                .Must(roleIds =>
+                {
+                    var count = _roleService
+                        .GetAll(x => roleIds.Contains(x.Id))
+                        .Count();
+
+                    return count == roleIds.Count;
+                })
+                .WithMessage("نقش انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.Prefix)
+                .NotNull()
+                .WithMessage("وارد کردن پیشوند الزامی است.")
+                .IsInEnum()
+                .WithMessage("پیشوند انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.Gender)
+                .NotNull()
+                .WithMessage("وارد کردن جنسیت الزامی است.")
+                .IsInEnum()
+                .WithMessage("جنسیت انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.Position)
+                .NotNull()
+                .WithMessage("وارد کردن سمت و مقام الزامی است.")
+                .IsInEnum()
+                .WithMessage("سمت و مقام انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.EducationalDegree)
+                .NotNull()
+                .WithMessage("وارد کردن مدرک تحصیلی الزامی است.")
+                .IsInEnum()
+                .WithMessage("مدرک تحصیلی انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.EducationalField)
+                .NotEmpty()
+                .WithMessage("وارد کردن رشته تحصیلی الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن رشته تحصیلی الزامی است.")
+                ;
+
+            RuleFor(x => x.OrganizationalChart)
+                .NotEmpty()
+                .WithMessage("وارد کردن چارت سازمانی الزامی است.")
+                .NotNull()
+                .WithMessage("وارد کردن چارت سازمانی الزامی است.")
+                ;
+
+            RuleFor(x => x.FirstConfirmerUserId)
+                .NotNull()
+                .WithMessage("انتخاب کاربر تاییدکننده الزامی است.")
+                .Must(userId =>
+                {
+                    return _userService
+                        .GetAll(x => x.Id == userId)
+                        .Any();
+                })
+                .WithMessage("کاربر تاییدکننده انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.SecondConfirmerUserId)
+                .NotNull()
+                .WithMessage("انتخاب کاربر تصدیق‌کننده الزامی است.")
+                .Must(userId =>
+                {
+                    return _userService
+                        .GetAll(x => x.Id == userId)
+                        .Any();
+                })
+                .WithMessage("کاربر تصدیق‌کننده انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.SuccessorUserId)
+                .Must(userId =>
+                {
+                    if (!userId.HasValue)
+                        return true;
+
+                    return _userService
+                        .GetAll(x => x.Id == userId.Value)
+                        .Any();
+                })
+                .WithMessage("جانشین انتخاب شده معتبر نمی‌باشد.")
+                ;
+
+            RuleFor(x => x.EmploymentDate)
+                .NotEmpty()
+                .WithMessage("تاریخ استخدام الزامی است")
+                .NotNull()
+                .WithMessage("تاریخ استخدام الزامی است");
+
+            RuleFor(x => x.PersonnelNumber)
+                .NotEmpty()
+                .WithMessage("شماره پرسنلی الزامی است")
+                .NotNull()
+                .WithMessage("شماره پرسنلی الزامی است")
+                .Must((obj, personnelNumber) =>
+                {
+                    return !_userService
+                        .GetAll(x => x.Id != obj.Id && x.PersonnelNumber == personnelNumber)
+                        .Any();
+                })
+                .WithMessage("شماره پرسنلی وارد شده تکراری می‌باشد.");
+
+            return await base.ValidateAsync(context, cancellation);
+        }
+    }
+}
