@@ -99,6 +99,9 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Property<Guid>("SecurityStamp")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("SignatureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,7 +114,11 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
 
                     b.HasIndex("ProfileId");
 
+                    b.HasIndex("SignatureId");
+
                     b.ToTable("Users");
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.UserRole", b =>
@@ -606,6 +613,136 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("LabReportHistories");
                 });
 
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PersonnelColorBlindnessTest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("BlueColorDetection")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("RedColorDetection")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("YellowColorDetection")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("PersonnelColorBlindnessTests");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PersonnelTrainingCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("DateOfEvent")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QualificationCriteria")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScoreEarned")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TeacherFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("ModifiedByUserId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.ToTable("PersonnelTrainingCourses");
+                });
+
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PhysicalSpecification", b =>
                 {
                     b.Property<int>("Id")
@@ -1059,6 +1196,56 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.ToTable("SystemSettings");
                 });
 
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Personnel", b =>
+                {
+                    b.HasBaseType("SolutionExplorer.KMS.Domain.Entities.AAA.User");
+
+                    b.Property<int>("EducationalDegree")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EducationalField")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime?>("EmploymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FirstConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrganizationalChart")
+                        .HasMaxLength(750)
+                        .HasColumnType("nvarchar(750)");
+
+                    b.Property<string>("PersonnelNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Prefix")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecondConfirmerUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SuccessorUserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("FirstConfirmerUserId");
+
+                    b.HasIndex("SecondConfirmerUserId");
+
+                    b.HasIndex("SuccessorUserId");
+
+                    b.ToTable("Personnels");
+                });
+
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.Role", b =>
                 {
                     b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
@@ -1088,11 +1275,17 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ProfileId");
 
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AttachmentFile", "Signature")
+                        .WithMany()
+                        .HasForeignKey("SignatureId");
+
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
 
                     b.Navigation("Profile");
+
+                    b.Navigation("Signature");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.UserRole", b =>
@@ -1333,6 +1526,84 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("ReceiverUser");
 
                     b.Navigation("ReporterUser");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PersonnelColorBlindnessTest", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("Personnel");
+
+                    b.Navigation("SecondConfirmerUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.PersonnelTrainingCourse", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByUserId");
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("Personnel");
 
                     b.Navigation("SecondConfirmerUser");
                 });
@@ -1580,6 +1851,37 @@ namespace SolutionExplorer.KMS.Infrastructure.Migrations
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
+                });
+
+            modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.Personnel", b =>
+                {
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "FirstConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("FirstConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", null)
+                        .WithOne()
+                        .HasForeignKey("SolutionExplorer.KMS.Domain.Entities.Personnel", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SecondConfirmerUser")
+                        .WithMany()
+                        .HasForeignKey("SecondConfirmerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SolutionExplorer.KMS.Domain.Entities.AAA.User", "SuccessorUser")
+                        .WithMany()
+                        .HasForeignKey("SuccessorUserId");
+
+                    b.Navigation("FirstConfirmerUser");
+
+                    b.Navigation("SecondConfirmerUser");
+
+                    b.Navigation("SuccessorUser");
                 });
 
             modelBuilder.Entity("SolutionExplorer.KMS.Domain.Entities.AAA.User", b =>

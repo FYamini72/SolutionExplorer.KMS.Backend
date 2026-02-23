@@ -1,4 +1,6 @@
-﻿namespace SolutionExplorer.KMS.Domain.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SolutionExplorer.KMS.Domain.Enums
 {
     public enum IdentifierType
     {
@@ -30,6 +32,19 @@
         /// <summary>
         /// منابع
         /// </summary>
-        References
+        References,
+
+        /// <summary>
+        /// شناسنامه و چارت سازمانی
+        /// </summary>
+        OrganizationalChart,
+        /// <summary>
+        /// صلاحیت و وظایف
+        /// </summary>
+        CompetenceAndDuties,
+        /// <summary>
+        /// ایمنی و حفاظت
+        /// </summary>
+        SafetyAndProtection,
     }
 }

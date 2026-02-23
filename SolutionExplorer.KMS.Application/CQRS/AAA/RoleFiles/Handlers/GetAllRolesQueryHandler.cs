@@ -1,11 +1,11 @@
 ﻿using Mapster;
 using MediatR;
-using SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Queries;
-using SolutionExplorer.KMS.Application.Dtos.AAA;
-using SolutionExplorer.KMS.Domain.Entities.AAA;
-using SolutionExplorer.KMS.Application.Services.Interfaces;
-using SolutionExplorer.KMS.Application.Dtos;
 using Microsoft.EntityFrameworkCore;
+using SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Queries;
+using SolutionExplorer.KMS.Application.Dtos;
+using SolutionExplorer.KMS.Application.Dtos.AAA;
+using SolutionExplorer.KMS.Application.Services.Interfaces;
+using SolutionExplorer.KMS.Domain.Entities.AAA;
 
 namespace SolutionExplorer.KMS.Application.CQRS.AAA.RoleFiles.Handlers
 {

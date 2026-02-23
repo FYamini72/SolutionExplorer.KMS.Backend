@@ -13,12 +13,117 @@ namespace SolutionExplorer.KMS.API.Mapping
         {
             TypeAdapterConfig<UserRole, UserRoleDisplayDto>
                 .NewConfig()
-                .Map(destination => destination.RoleTitle, source => source.Role == null ? string.Empty : source.Role.Title)
+                .Map
+                (
+                    destination => destination.RoleTitle, 
+                    source => source.Role == null ? string.Empty : source.Role.Title
+                )
                 ;
 
             TypeAdapterConfig<User, UserDisplayDto>
                 .NewConfig()
-                .Map(destination => destination.AttachmentUrl, source => source.Profile != null ? $"/staticfiles/{source.Profile.FileName}" : "")
+                .Map
+                (
+                    destination => destination.ProfileAttachmentUrl,
+                    source => source.Profile != null ? $"/staticfiles/{source.Profile.FileName}" : ""
+                )
+                .Map
+                (
+                    destination => destination.SignatureAttachmentUrl,
+                    source => source.Signature != null ? $"/staticfiles/{source.Signature.FileName}" : ""
+                )
+                ;
+
+            TypeAdapterConfig<Personnel, PersonnelDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.ProfileAttachmentUrl, 
+                    source => source.Profile != null ? $"/staticfiles/{source.Profile.FileName}" : ""
+                )
+                .Map
+                (
+                    destination => destination.SignatureAttachmentUrl, 
+                    source => source.Signature != null ? $"/staticfiles/{source.Signature.FileName}" : ""
+                )
+                .Map
+                (
+                    destination => destination.SuccessorUserFullName,
+                    source => source.SuccessorUser != null ? $"{source.SuccessorUser.FirstName ?? ""} {source.SuccessorUser.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => source.FirstConfirmerUser != null ? $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => source.SecondConfirmerUser != null ? $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.RoleIds,
+                    source => source.UserRoles != null ? source.UserRoles.Select(x => x.RoleId).ToList() : null
+                )
+                ;
+
+            TypeAdapterConfig<PersonnelColorBlindnessTest, PersonnelColorBlindnessTestDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.PersonnelFullName,
+                    source => source.Personnel != null ? $"{source.Personnel.FirstName ?? ""} {source.Personnel.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.Prefix,
+                    source => source.Personnel.Prefix
+                )
+                .Map
+                (
+                    destination => destination.PersonnelNumber,
+                    source => source.Personnel.PersonnelNumber
+                )
+                .Map
+                (
+                    destination => destination.EmploymentDate,
+                    source => source.Personnel.EmploymentDate
+                )
+                ;
+
+            TypeAdapterConfig<PersonnelTrainingCourse, PersonnelTrainingCourseDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
+                )
+                .Map
+                (
+                    destination => destination.PersonnelFullName,
+                    source => source.Personnel != null ? $"{source.Personnel.FirstName ?? ""} {source.Personnel.LastName ?? ""}".Trim() : ""
+                )
+                .Map
+                (
+                    destination => destination.PersonnelNumber,
+                    source => source.Personnel.PersonnelNumber
+                )
                 ;
 
             TypeAdapterConfig<Identifier, IdentifierDisplayDto>

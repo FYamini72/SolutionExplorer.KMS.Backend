@@ -15,6 +15,11 @@
         /// <summary>
         /// منابع
         /// </summary>
-        References
+        References,
+
+        /// <summary>
+        /// امضا
+        /// </summary>
+        UserSignature
     }
 }

@@ -13,14 +13,12 @@ namespace SolutionExplorer.KMS.Domain.EntitiesConfigurations
             builder.Property(x => x.Description).HasMaxLength(1000);
         }
     }
-    public class LabReportHistoryConfiguration : IEntityTypeConfiguration<LabReportHistory>
+    public class PersonnelConfiguration : IEntityTypeConfiguration<Personnel>
     {
-        public void Configure(EntityTypeBuilder<LabReportHistory> builder)
+        public void Configure(EntityTypeBuilder<Personnel> builder)
         {
-            builder.Property(x => x.PatientName).HasMaxLength(100);
-            builder.Property(x => x.AdmissionNumber).HasMaxLength(50);
-            builder.Property(x => x.Description).HasMaxLength(1500);
-            builder.Property(x => x.ReporterComment).HasMaxLength(1500);
+            builder.Property(x => x.EducationalField).HasMaxLength(150);
+            builder.Property(x => x.OrganizationalChart).HasMaxLength(750);
         }
     }
 }
