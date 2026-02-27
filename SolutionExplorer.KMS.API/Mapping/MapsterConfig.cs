@@ -242,6 +242,25 @@ namespace SolutionExplorer.KMS.API.Mapping
                 //)
                 ;
 
+            TypeAdapterConfig<PeriodicQualityControl, PeriodicQualityControlDisplayDto>
+                .NewConfig()
+                .Map
+                (
+                    destination => destination.FirstConfirmerUserFullName,
+                    source => source.FirstConfirmerUser != null ? $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim() : string.Empty
+                )
+                .Map
+                (
+                    destination => destination.SecondConfirmerUserFullName,
+                    source => source.SecondConfirmerUser != null ? $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim() : string.Empty
+                )
+                .Map
+                (
+                    destination => destination.PerformedByUserFullName,
+                    source => source.PerformedByUser != null ? $"{source.PerformedByUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim() : string.Empty
+                )
+                ;
+
 
             TypeAdapterConfig<PhysicalSpecification, PhysicalSpecificationDisplayDto>
                 .NewConfig()
