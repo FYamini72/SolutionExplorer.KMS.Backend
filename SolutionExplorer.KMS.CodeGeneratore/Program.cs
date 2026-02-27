@@ -28,6 +28,7 @@ namespace SolutionExplorer.KMS.CodeGeneratore
                 nameof(UserRole).ToLower(),
                 nameof(Personnel).ToLower(),
                 nameof(PersonnelColorBlindnessTest).ToLower(),
+                nameof(PersonnelTrainingCourse).ToLower(),
 
                 nameof(DocumentInfo).ToLower(),
 
@@ -47,6 +48,11 @@ namespace SolutionExplorer.KMS.CodeGeneratore
                 nameof(QCBaseInfoExpectedResult).ToLower(),
                 nameof(QCBaseInfoPhysicalSpecification).ToLower(),
                 nameof(PhysicalSpecification).ToLower(),
+
+                nameof (PeriodicQCPhysicalSpecification).ToLower(),
+                nameof (QCBaseInfoAppearance).ToLower(),
+                nameof (PeriodicQCAppearance).ToLower(),
+                nameof (PeriodicQualityControl).ToLower(),
             };
 
             do
