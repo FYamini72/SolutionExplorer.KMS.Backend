@@ -32,5 +32,22 @@ namespace SolutionExplorer.KMS.Application.Dtos
         public int SecondConfirmerUserId { get; set; }
         public string SecondConfirmerUserFullName { get; set; }
 
+        //public List<PeriodicQCPhysicalSpecificationsDisplayDto> PhysicalSpecifications { get; set; }
+        //public List<PeriodicQCAppearanceDisplayDto> Appearances { get; set; }
+    }
+
+	public class PeriodicQCPhysicalSpecificationsDisplayDto : BaseDto
+    {
+        public int QCBaseInfoPhysicalSpecificationId { get; set; }
+        public string Title { get; set; }
+        public bool IsChecked { get; set; }
+    }
+
+	public class PeriodicQCAppearanceDisplayDto : BaseDto
+    {
+        public int QCBaseInfoAppearanceId { get; set; }
+        public string Title { get; set; }
+        public AppearanceGroupEnum AppearanceGroup { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

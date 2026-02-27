@@ -2,7 +2,7 @@
 
 namespace SolutionExplorer.KMS.Domain.Entities
 {
-    public class PhysicalSpecification : BaseEntity
+    public class PeriodicQCPhysicalSpecification : BaseEntity
     {
         /// <summary>
         /// اطلاعات پایه کنترل کیفی
@@ -14,9 +14,9 @@ namespace SolutionExplorer.KMS.Domain.Entities
         /// <summary>
         /// کنترل کیفی
         /// </summary>
-        public int QualityControlId { get; set; }
-        [ForeignKey(nameof(QualityControlId))]
-        public QualityControl QualityControl { get; set; }
+        public int PeriodicQualityControlId { get; set; }
+        [ForeignKey(nameof(PeriodicQualityControlId))]
+        public PeriodicQualityControl PeriodicQualityControl { get; set; }
 
         public bool IsChecked { get; set; }
     }

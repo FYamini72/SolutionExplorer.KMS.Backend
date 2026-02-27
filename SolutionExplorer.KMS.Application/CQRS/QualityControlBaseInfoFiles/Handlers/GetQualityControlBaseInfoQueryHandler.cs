@@ -24,6 +24,8 @@ namespace SolutionExplorer.KMS.Application.CQRS.QualityControlBaseInfoFiles.Hand
                 .Include(x=>x.StorageConditions)
                 .Include(x=>x.QCBaseInfoExpectedResults)
                 .Include(x=>x.QCBaseInfoPhysicalSpecifications)
+                .Include(x=>x.PeriodicQCBaseInfoExpectedResults)
+                .Include(x=>x.QCBaseInfoAppearances)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (obj == null)

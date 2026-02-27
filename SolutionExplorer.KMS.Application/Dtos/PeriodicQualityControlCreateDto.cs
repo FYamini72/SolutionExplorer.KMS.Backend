@@ -25,5 +25,21 @@ namespace SolutionExplorer.KMS.Application.Dtos
 		public int FirstConfirmerUserId { get; set; }
 		public int SecondConfirmerUserId { get; set; }
 
+        public ICollection<PeriodicQCPhysicalSpecificationCreateDto> PhysicalSpecifications { get; set; }
+        public ICollection<PeriodicQCAppearanceCreateDto> Appearances { get; set; }
     }
+
+	public class PeriodicQCPhysicalSpecificationCreateDto : BaseDto
+	{
+        public int QCBaseInfoPhysicalSpecificationId { get; set; }
+        //public int PeriodicQualityControlId { get; set; }
+        public bool IsChecked { get; set; }
+    }
+
+    public class PeriodicQCAppearanceCreateDto : BaseDto
+	{
+        //public int PeriodicQualityControlId { get; set; }
+        public int QCBaseInfoAppearanceId { get; set; }
+    }
+
 }

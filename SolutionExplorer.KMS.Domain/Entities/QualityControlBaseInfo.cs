@@ -11,7 +11,10 @@ namespace SolutionExplorer.KMS.Domain.Entities
         public QCCategory Category { get; set; }
 
         public ICollection<StorageCondition> StorageConditions { get; set; }
-        public ICollection<QCBaseInfoExpectedResult> QCBaseInfoExpectedResults { get; set; }
         public ICollection<QCBaseInfoPhysicalSpecification> QCBaseInfoPhysicalSpecifications { get; set; }
+        public ICollection<QCBaseInfoExpectedResult> QCBaseInfoExpectedResults { get; set; }
+
+        public ICollection<PeriodicQCBaseInfoExpectedResult> PeriodicQCBaseInfoExpectedResults { get; set; }
+        public ICollection<QCBaseInfoAppearance> QCBaseInfoAppearances { get; set; }
     }
 }

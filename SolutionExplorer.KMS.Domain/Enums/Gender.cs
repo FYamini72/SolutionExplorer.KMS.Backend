@@ -57,4 +57,13 @@ namespace SolutionExplorer.KMS.Domain.Enums
     {
 
     }
+
+    public enum ResultType
+    {
+        Boolian,
+        MultiSelect,
+        SingleSelect,
+        Text,
+        Number
+    }
 }

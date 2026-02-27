@@ -15,7 +15,7 @@ namespace SolutionExplorer.KMS.API.Mapping
                 .NewConfig()
                 .Map
                 (
-                    destination => destination.RoleTitle, 
+                    destination => destination.RoleTitle,
                     source => source.Role == null ? string.Empty : source.Role.Title
                 )
                 ;
@@ -38,12 +38,12 @@ namespace SolutionExplorer.KMS.API.Mapping
                 .NewConfig()
                 .Map
                 (
-                    destination => destination.ProfileAttachmentUrl, 
+                    destination => destination.ProfileAttachmentUrl,
                     source => source.Profile != null ? $"/staticfiles/{source.Profile.FileName}" : ""
                 )
                 .Map
                 (
-                    destination => destination.SignatureAttachmentUrl, 
+                    destination => destination.SignatureAttachmentUrl,
                     source => source.Signature != null ? $"/staticfiles/{source.Signature.FileName}" : ""
                 )
                 .Map
@@ -130,22 +130,22 @@ namespace SolutionExplorer.KMS.API.Mapping
                 .NewConfig()
                 .Map
                 (
-                    destination => destination.ProducerUserFullName, 
+                    destination => destination.ProducerUserFullName,
                     source => source.ProducerUser != null ? $"{source.ProducerUser.FirstName ?? ""} {source.ProducerUser.LastName ?? ""}".Trim() : ""
                 )
                 .Map
                 (
-                    destination => destination.FirstConfirmerUserFullName, 
+                    destination => destination.FirstConfirmerUserFullName,
                     source => $"{source.FirstConfirmerUser.FirstName ?? ""} {source.FirstConfirmerUser.LastName ?? ""}".Trim()
                 )
                 .Map
                 (
-                    destination => destination.SecondConfirmerUserFullName, 
+                    destination => destination.SecondConfirmerUserFullName,
                     source => $"{source.SecondConfirmerUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim()
                 )
                 .Map
                 (
-                    destination => destination.AttachmentFileName, 
+                    destination => destination.AttachmentFileName,
                     source => (source.AttachmentFile != null ? source.AttachmentFile.FileName : "").Trim()
                 )
                 ;
@@ -259,6 +259,33 @@ namespace SolutionExplorer.KMS.API.Mapping
                     destination => destination.PerformedByUserFullName,
                     source => source.PerformedByUser != null ? $"{source.PerformedByUser.FirstName ?? ""} {source.SecondConfirmerUser.LastName ?? ""}".Trim() : string.Empty
                 )
+                //.Map
+                //(
+                //    destination => destination.Appearances,
+                //    source => source.Appearances != null && source.Appearances.Any()
+                //        ? source.Appearances.Select(x => new PeriodicQCAppearanceDisplayDto()
+                //        {
+                //            QCBaseInfoAppearanceId = x.QCBaseInfoAppearanceId,
+                //            AppearanceGroup = x.QCBaseInfoAppearance.AppearanceGroup,
+                //            Title = x.QCBaseInfoAppearance.Title,
+                //            IsSelected = x.QCBaseInfoAppearance.IsSelected,
+                //        })
+                //        .ToList()
+                //        : null
+                //)
+                //.Map
+                //(
+                //    destination => destination.PhysicalSpecifications,
+                //    source => source.PhysicalSpecifications != null && source.PhysicalSpecifications.Any()
+                //        ? source.PhysicalSpecifications.Select(x => new PeriodicQCPhysicalSpecificationsDisplayDto()
+                //        {
+                //            QCBaseInfoPhysicalSpecificationId = x.QCBaseInfoPhysicalSpecificationId,
+                //            Title = x.QCBaseInfoPhysicalSpecification.Title,
+                //            IsChecked = x.IsChecked
+                //        })
+                //        .ToList()
+                //        : null
+                //)
                 ;
 
 
